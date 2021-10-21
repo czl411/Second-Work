@@ -136,3 +136,4 @@ class Game_Rule:                    #游戏规则类
 #     print("2P：%d" %P[1].sum)
 #     print(P[1].card)
 #     who = (who+1)%2
+
