@@ -17,7 +17,7 @@ class Game_page_C():
         self.Game = Game_Rule()
         self.P = []
         self.P.append(Player("P1"))
-        self.P.append(Player("P2"))
+        self.P.append(Player("AI"))
         self.Cards = Card_zu()
         self.Place_Area = Placement_Area()
         self.name = mordern
@@ -28,9 +28,7 @@ class Game_page_C():
         self.MeiHua_center = (338 * 2 + 70) / 2, (415 * 2 + 100) / 2
 
         self.HeiTao_center_2 = ((947-110) * 2 + 70) / 2, ((596 - 442) * 2 + 100) / 2
-        self.HongXin_center_2 = ((947 - 186) * 2 + 70) / 2, ((596 - 442) * 2 + 100) / 2
-        self.FangKuai_center_2 = ((947 - 262) * 2 + 70) / 2, ((596 - 442) * 2 + 100) / 2
-        self.MeiHua_center_2 = ((947 - 338) * 2 + 70) / 2, ((596 - 442) * 2 + 100) / 2
+
 
         self.qipai_center = (535 * 2 + 80) / 2, (280 * 2 + 110) / 2
         self.cards_center = (405 * 2 + 80) / 2, (280 * 2 + 110) / 2
@@ -66,27 +64,12 @@ class Game_page_C():
             self.card4_rect = self.cards4.get_rect()
             self.card4_rect.center = self.MeiHua_center
 
-        if len(self.P[1].S) > 0:
-            self.card5 = self.img_url_dict[self.P[1].S[len(self.P[1].S) - 1]]
+        if self.P[1].sum > 0:
+            self.card5 = self.img_url_dict[' ']
             self.cards5 = pygame.image.load(self.card5).convert_alpha()
             self.card5_rect = self.cards5.get_rect()
             self.card5_rect.center = self.HeiTao_center_2
-        if len(self.P[1].H) > 0:
-            self.card6 = self.img_url_dict[self.P[1].H[len(self.P[1].H) - 1]]
-            self.cards6 = pygame.image.load(self.card6).convert_alpha()
-            self.card6_rect = self.cards6.get_rect()
-            self.card6_rect.center = self.HongXin_center_2
-        if len(self.P[1].D) > 0:
-            self.card7 = self.img_url_dict[self.P[1].D[len(self.P[1].D) - 1]]
-            self.cards7 = pygame.image.load(self.card7).convert_alpha()
-            self.card7_rect = self.cards7.get_rect()
-            self.card7_rect.center = self.FangKuai_center_2
-        if len(self.P[1].C) > 0:
-            self.card8 = self.img_url_dict[self.P[1].C[len(self.P[1].C) - 1]]
-            self.cards8 = pygame.image.load(self.card8).convert_alpha()
-            self.card8_rect = self.cards8.get_rect()
-            self.card8_rect.center = self.MeiHua_center_2
-            print()
+
         if len(self.Place_Area.card):
             card = self.Place_Area.card[len(self.Place_Area.card)-1]
             self.card9 = self.img_url_dict.get(card,"source/card/SA.png")
@@ -118,14 +101,9 @@ class Game_page_C():
             if len(self.P[0].C):
                 self.screen.blit(self.cards4, self.card4_rect)
 
-            if len(self.P[1].S):
+            if self.P[1].sum:
                 self.screen.blit(self.cards5, self.card5_rect)
-            if len(self.P[1].H):
-                self.screen.blit(self.cards6, self.card6_rect)
-            if len(self.P[1].D):
-                self.screen.blit(self.cards7, self.card7_rect)
-            if len(self.P[1].C):
-                self.screen.blit(self.cards8, self.card8_rect)
+
             if self.Place_Area.sum:
                 self.screen.blit(self.cards9,self.card9_rect)
 
@@ -138,14 +116,9 @@ class Game_page_C():
             self.screen.blit(self.fontObj.render(f"梅花:{len(self.P[0].C)}",
                                                  False, self.Black), (338, 515))
 
-            self.screen.blit(self.fontObj.render(f"黑桃:{len(self.P[1].S)}",
+            self.screen.blit(self.fontObj.render(f"AI:{self.P[1].sum}",
                                                  False, self.Black), (947-110, 596-442-20))
-            self.screen.blit(self.fontObj.render(f"红心:{len(self.P[1].H)}",
-                                                 False, self.Black), (947-186, 596-442-20))
-            self.screen.blit(self.fontObj.render(f"方块:{len(self.P[1].D)}",
-                                                 False, self.Black), (947-262, 596-442-20))
-            self.screen.blit(self.fontObj.render(f"梅花:{len(self.P[1].C)}",
-                                                 False, self.Black), (947-338, 596-442-20))
+
 
             self.screen.blit(self.fontObj.render(f"弃牌:{self.Place_Area.sum}",
                                                  False, self.Black), (535, 390))
@@ -159,9 +132,7 @@ class Game_page_C():
             pygame.draw.rect(self.screen, self.Black, [262, 415, 70, 100], 1)   # P1方块
             pygame.draw.rect(self.screen, self.Black, [338, 415, 70, 100], 1)   # P1梅花
             pygame.draw.rect(self.screen, self.Black, [947-110, 596-442, 70, 100], 1)  # P2黑桃
-            pygame.draw.rect(self.screen, self.Black, [947-186, 596-442, 70, 100], 1)  # P2心
-            pygame.draw.rect(self.screen, self.Black, [947-262, 596-442, 70, 100], 1)  # P2方块
-            pygame.draw.rect(self.screen, self.Black, [947-338, 596-442, 70, 100], 1)  # P2梅花
+
             pygame.draw.rect(self.screen, self.Black, [40, 25, 80, 30], 1)  # fanhui
             pygame.draw.rect(self.screen, self.Black, [130, 25, 80, 30], 1)  # 设置
             pygame.draw.rect(self.screen, self.Black, [535, 280, 80, 110], 1)  # 弃牌
@@ -177,7 +148,6 @@ class Game_page_C():
                         sys.exit()
                     if x >40 and x < 120 and y > 15 and y < 45 and\
                             event.type == MOUSEBUTTONDOWN:
-                        if self.name == 'PVP':
                             Danji_Game_Part.danji_page()
                     if 110 < x < 180 and 415 < y < 515 and\
                             event.type == MOUSEBUTTONDOWN and len(self.P[0].S) > 0:
@@ -197,14 +167,6 @@ class Game_page_C():
                     if card:
                         self.Place_Area.Put_in(card)
                         self.status = 0
-                if len(self.P[0].S):
-                    print("P0S:", self.P[0].S)
-                if len(self.P[0].D):
-                    print("P0D:", self.P[0].D)
-                if len(self.P[0].C):
-                    print("P0C:", self.P[0].C)
-                if len(self.P[0].H):
-                    print("P0H:", self.P[0].H)
                 pygame.display.update()
 
             while(self.status and self.who):
@@ -216,36 +178,15 @@ class Game_page_C():
                         sys.exit()
                     if x >40 and x < 120 and y > 15 and y < 45 and\
                             event.type == MOUSEBUTTONDOWN:
-                        if self.name == 'PVP':
                             Danji_Game_Part.danji_page()
-                    if 947 - 110 < x < 947 - 110 + 70 and 596 - 442 < y < 596 - 442 + 100 and\
-                            event.type == MOUSEBUTTONDOWN and len(self.P[1].S) > 0:
-                        card = self.P[1].Knockout_S() #打出黑桃
-                    if 947 - 186 < x < 947 - 186 + 70 and 596 - 442 < y < 596 - 442 + 100 and\
-                            event.type == MOUSEBUTTONDOWN and len(self.P[1].H) > 0:
-                        card = self.P[1].Knockout_H() #打出红心
-                    if 947 - 262 < x < 947 - 262 + 70 and 596 - 442 < y < 596 - 442 + 100 and\
-                            event.type == MOUSEBUTTONDOWN and len(self.P[1].D) > 0:
-                        card = self.P[1].Knockout_D() #打出方块
-                    if 947 - 338 < x < 947 - 338 + 70 and 596 - 442 < y < 596 - 442 + 100 and\
-                            event.type == MOUSEBUTTONDOWN and len(self.P[1].C) > 0:
-                        card = self.P[1].Knockout_C() #打出梅花
+
                     if 405 < x < 405 + 80 and 280 < y < 280 + 110 and\
                             event.type == MOUSEBUTTONDOWN:
                         card = self.Cards.random_card()
                     if card:
                         self.Place_Area.Put_in(card)
                         self.status = 0
-                if len(self.P[1].S):
-                    print("P1S:",self.P[1].S)
-                if len(self.P[1].D):
-                    print("P1D:",self.P[1].D)
-                if len(self.P[1].C):
-                    print("P1C:",self.P[1].C)
-                if len(self.P[1].H):
-                    print("P1H:",self.P[1].H)
                 pygame.display.update()
-
             if len(self.Place_Area.card):
                 print("Place_Area:",self.Place_Area.card)
             if self.Game.Whether_Eat_Cards(self.Place_Area):
@@ -272,7 +213,7 @@ class Game_page_C():
             if self.P[0].sum < self.P[1].sum:
                 screen.blit(fontObj.render("P1 WIN", False, self.Black), (200, 100))
             elif self.P[0].sum > self.P[1].sum:
-                screen.blit(fontObj.render("P2 WIN", False, self.Black), (200, 100))
+                screen.blit(fontObj.render("AI WIN", False, self.Black), (200, 100))
             elif self.P[0].sum == self.P[1].sum:
                 screen.blit(fontObj.render("平局", False, self.Black), (225, 100))
             fontObj = pygame.font.Font("source/word_type/word3.TTF", 24)
@@ -288,11 +229,10 @@ class Game_page_C():
                 if 130 < x < 130 +24*4 and 200 < y < 200 +24 and \
                         event.type == MOUSEBUTTONDOWN:
                     pygame.quit()
-                    Game_page_C('PVP')
+                    Game_page_C('PVE')
                 if 130+24*6.5 < x < 130 +24*10.5 and 200 < y < 200 +24 and \
                         event.type == MOUSEBUTTONDOWN:
                     pygame.quit()
                     Danji_Game_Part.danji_page()
             pygame.display.update()
             clock.tick(30)
-
