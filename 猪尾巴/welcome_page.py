@@ -31,4 +31,4 @@ class welcome_page():
             pygame.display.update()
             self.clock.tick(30)
             
-welcome_page()
+# welcome_page()
